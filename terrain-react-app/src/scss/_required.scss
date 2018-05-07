@@ -1,0 +1,10 @@
+// In order to use Bootstrap functions, variables, or mixins inside custom components, you must import this file first before anything else.
+
+// Custom Bootstrap variable overrides (must be imported before default Bootstrap variables)
+// https://getbootstrap.com/docs/4.0/getting-started/theming/#variable-defaults
+@import "variables";
+
+// Required Bootstrap modules
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";

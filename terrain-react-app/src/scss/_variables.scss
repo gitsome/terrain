@@ -1,0 +1,7 @@
+$appTextLighter: #777;
+$appGreen: #00ff90;
+$appGreenDark: darken(#00ff90, 25%);
+$appBlueDark: rgba(4,44,75, 1.0);
+$appBlue: lighten($appBlueDark, 25%);
+$appBlueLight: lighten($appBlueDark, 45%);
+$appBlueLighter: lighten($appBlueDark, 60%);

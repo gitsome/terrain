@@ -1,0 +1,91 @@
+@import 'scss/_required.scss';
+
+// Additional Bootstrap Includes
+@import 'node_modules/bootstrap/scss/reboot';
+@import 'node_modules/bootstrap/scss/grid';
+
+// Main styling
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding-bottom: 30px;
+}
+
+h3 {
+    font-size: 1.4em;
+    color: $appBlueDark;
+}
+h4 {
+    font-size: 1.1em;
+}
+
+header {
+    padding: 30px;
+    margin-bottom: 30px;
+    background: $appBlueDark;
+    text-transform: uppercase;
+    text-align: center;
+    box-shadow: 5px 0px 15px 0px rgba(0,0,0, 0.75);
+
+    h1 {
+        color: #fff;
+        font-size: 30px;
+        letter-spacing: 9px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        font-weight: 300;
+    }
+
+    h2 {
+        font-size: 24px;
+        color: $appGreen;
+        opacity: .9;
+        text-transform: lowercase;
+        letter-spacing: 6px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+}
+
+button {
+    outline: none;
+    &:focus, &:active {
+        outline: none;
+    }
+}
+
+.text-right {
+    text-align: right;
+}
+.text-left {
+    text-align: left;
+}
+.text-center {
+    text-align: center;
+}
+
+.icon-right {
+    margin-left: 8px;
+}
+.icon-left {
+    margin-right: 8px;
+}
+
+.paper-container {
+    padding: 30px;
+    margin-bottom: 15px;
+}
+
+.perlin-noise-color-type-wrapper {
+    float: right;
+    display: block;
+    margin-top: -7px;
+    * {
+        vertical-align: middle;
+    }
+    .perlin-noise-color-type-label {
+        display: inline-block;
+        margin-right: 5px;
+        font-size: 18px;
+        color: rgba(0,0,0, 0.6);
+    }
+}

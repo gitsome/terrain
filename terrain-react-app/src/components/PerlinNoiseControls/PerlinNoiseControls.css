@@ -1,0 +1,35 @@
+.rc-slider {
+  height: 22px; }
+
+.rc-slider-handle {
+  border: solid 3px #40a6f5;
+  background: #40a6f5;
+  margin-left: -9px;
+  margin-top: -5px;
+  width: 18px;
+  height: 18px; }
+
+.rc-slider-rail {
+  top: 7px; }
+
+.rc-slider-track {
+  background-color: #88c8f9;
+  height: 8px; }
+
+.perlin-noise-control {
+  margin-bottom: 20px; }
+  .perlin-noise-control .perlin-noise-description {
+    color: #777;
+    font-size: 14px; }
+  .perlin-noise-control h4 {
+    transition: color 500ms ease-out; }
+
+.perlin-noise-controls-island-options {
+  margin-bottom: 15px;
+  padding: 30px 30px 30px 30px; }
+
+.perlin-noise-controls-octave-controls {
+  padding: 30px; }
+  .perlin-noise-controls-octave-controls .perlin-noise-octave-wrapper {
+    padding: 30px;
+    margin-bottom: 15px; }
