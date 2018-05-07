@@ -8,6 +8,8 @@
   margin-top: -5px;
   width: 18px;
   height: 18px; }
+  .rc-slider-handle:active, .rc-slider-handle:focus {
+    border-color: #042c4b; }
 
 .rc-slider-rail {
   top: 7px; }

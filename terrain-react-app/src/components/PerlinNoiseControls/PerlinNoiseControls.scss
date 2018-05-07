@@ -11,6 +11,9 @@
     margin-top: -5px;
     width: 18px;
     height: 18px;
+    &:active, &:focus {
+        border-color: $appBlueDark;
+    }
 }
 
 .rc-slider-rail {
