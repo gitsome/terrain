@@ -1,4 +1,14 @@
-.perlin-noise-octave-lock {
-  top: 17px; }
-  .perlin-noise-octave-lock.perlin-noise-octave-lock-disabled {
-    opacity: 0.50; }
+.perlin-noise-octave {
+  position: relative; }
+  .perlin-noise-octave .perlin-noise-octave-lock {
+    top: 17px; }
+    .perlin-noise-octave .perlin-noise-octave-lock.perlin-noise-octave-lock-disabled {
+      opacity: 0.50; }
+  .perlin-noise-octave .perlin-noise-octave-delete {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    color: #AAA;
+    background-color: #f3f3f3; }
+    .perlin-noise-octave .perlin-noise-octave-delete:hover, .perlin-noise-octave .perlin-noise-octave-delete:focus {
+      color: #000; }

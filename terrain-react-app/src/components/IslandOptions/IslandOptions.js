@@ -47,7 +47,7 @@ class IslandOptions extends Component {
     return (
       <Fragment>
 
-        <h3>Apply Island Settings
+        <h3>Apply Island Filter
           <Switch
             color="primary"
             checked={this.state.useIslandOptions}

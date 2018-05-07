@@ -1,6 +1,25 @@
-.perlin-noise-octave-lock {
-    top: 17px;
-    &.perlin-noise-octave-lock-disabled {
-        opacity: 0.50;
+.perlin-noise-octave {
+
+    position: relative;
+
+    .perlin-noise-octave-lock {
+        top: 17px;
+        &.perlin-noise-octave-lock-disabled {
+            opacity: 0.50;
+        }
     }
+
+    .perlin-noise-octave-delete {
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        color: #AAA;
+
+        background-color: #f3f3f3;
+
+        &:hover, &:focus {
+            color: #000;
+        }
+    }
+
 }
