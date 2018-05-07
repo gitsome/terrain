@@ -31,5 +31,7 @@
 .perlin-noise-controls-octave-controls {
   padding: 30px; }
   .perlin-noise-controls-octave-controls .perlin-noise-octave-wrapper {
+    background: rgba(0, 0, 0, 0.025);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     padding: 30px;
     margin-bottom: 15px; }

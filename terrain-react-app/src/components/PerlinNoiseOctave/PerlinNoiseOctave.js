@@ -19,9 +19,58 @@ class PerlinNoiseOctave extends Component {
     scaleLocked: true
   };
 
+  xScaleChanged = (newXScale) => {
+
+    const xScale = newXScale;
+    let zScale = this.props.octave.zScale;
+
+    if (this.state.scaleLocked) {
+      zScale = xScale;
+    }
+
+    this.props.onChange({
+      id: this.props.octave.id,
+      xScale: xScale,
+      zScale: zScale,
+      elevationPercent: this.props.octave.elevationPercent
+    });
+  };
+
+  zScaleChanged = (newZScale) => {
+
+    const zScale = newZScale;
+    let xScale = this.props.octave.xScale;
+
+    if (this.state.scaleLocked) {
+      xScale = zScale;
+    }
+
+    this.props.onChange({
+      id: this.props.octave.id,
+      xScale: xScale,
+      zScale: zScale,
+      elevationPercent: this.props.octave.elevationPercent
+    });
+  };
+
   toggleLock = () => {
+
+    const newLockedState = !this.state.scaleLocked;
+
+    if (newLockedState === true) {
+
+      const xScale = this.props.octave.xScale;
+
+      this.props.onChange({
+        id: this.props.octave.id,
+        xScale: xScale,
+        zScale: xScale,
+        elevationPercent: this.props.octave.elevationPercent
+      });
+    }
+
     this.setState({
-      scaleLocked: !this.state.scaleLocked
+      scaleLocked: newLockedState
     });
   }
 
@@ -34,7 +83,7 @@ class PerlinNoiseOctave extends Component {
           <div className="col col-sm-5">
             <div className="perlin-noise-control">
               <label>X Scale</label>
-              <Slider min={0} max={100} defaultValue={50} />
+              <Slider min={0} max={100} value={this.props.octave.xScale} onChange={this.xScaleChanged} />
             </div>
           </div>
 
@@ -52,7 +101,7 @@ class PerlinNoiseOctave extends Component {
           <div className="col col-sm-5">
             <div className="perlin-noise-control">
               <label>Z Scale</label>
-              <Slider min={0} max={100} defaultValue={0} />
+              <Slider min={0} max={100} value={this.props.octave.zScale} onChange={this.zScaleChanged} />
             </div>
           </div>
 

@@ -25,9 +25,8 @@ class PerlinNoiseControls extends Component {
       {
         id: 0,
         xScale: 5,
-        yScale: 14,
-        xOffset: 0,
-        yOffset: 0
+        zScale: 5,
+        elevationPercent: 100
       }
     ]
   };
@@ -73,9 +72,8 @@ class PerlinNoiseControls extends Component {
     return {
       id: this.octaveId,
       xScale: this.getMaxScaleX() * 1.25,
-      ySacle: this.getMaxScaleY() * 1.25,
-      xOffset: 0,
-      yOffset: 0
+      zScale: this.getMaxScaleY() * 1.25,
+      elevationPercent: 10
     }
   };
 
@@ -89,26 +87,34 @@ class PerlinNoiseControls extends Component {
     this.setState({seaLevelPadding: newValue});
   }
 
-  sliderChangeStart (inputKey) {
-    this.setState({activeInput: inputKey});
-  }
-
-  sliderChangeEnd (inputKey) {
-    this.setState({activeInput: false});
-    this.notifyStateChange();
-  }
-
   toggleUseIslandOptions (useIslandOptions) {
     this.setState({
       useIslandOptions: useIslandOptions
     });
   }
 
+  onOctaveChanged = (octaveChanges) => {
+
+    const changedOctave = this.state.octaves.find((octave) => {
+      return octave.id === octaveChanges.id;
+    });
+
+    if (changedOctave) {
+
+      changedOctave.xScale = octaveChanges.xScale;
+      changedOctave.zScale = octaveChanges.zScale;
+      changedOctave.elevationPercent = octaveChanges.elevationPercent;
+
+      // force a change wtf
+      this.forceUpdate();
+    }
+  };
+
   onDeleteOctave = (octave) => {
     this.setState({
       octaves: without(this.state.octaves, octave)
     })
-  }
+  };
 
   render() {
     return (
@@ -122,7 +128,7 @@ class PerlinNoiseControls extends Component {
               this.state.octaves.map((octave) => {
                 return (
                   <Paper className="perlin-noise-octave-wrapper" key={octave.id}>
-                    <PerlinNoiseOctave octave={octave} onDelete={this.onDeleteOctave}></PerlinNoiseOctave>
+                    <PerlinNoiseOctave octave={octave} onDelete={this.onDeleteOctave} onChange={this.onOctaveChanged}></PerlinNoiseOctave>
                   </Paper>
                 );
               })

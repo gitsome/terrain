@@ -20,12 +20,7 @@ class IslandOptions extends Component {
     this.setState({seaLevelPadding: newValue});
   }
 
-  sliderChangeStart (inputKey) {
-    this.setState({activeInput: inputKey});
-  }
-
   sliderChangeEnd (inputKey) {
-    this.setState({activeInput: false});
     this.notifyStateChange();
   }
 
@@ -37,6 +32,10 @@ class IslandOptions extends Component {
       useIslandOptions: this.state.useIslandOptions
     });
   }
+
+  finishChange = () => {
+    this.notifyStateChange();
+  };
 
   toggleUseIslandOptions (useIslandOptions) {
     this.setState({
@@ -64,14 +63,14 @@ class IslandOptions extends Component {
               <Slider min={0} max={100} defaultValue={5} />
             </div>
 
-            <div className={"perlin-noise-control " + (this.state.activeInput === "seaLevelPadding" ? "perlin-noise-control-active" : "")}>
+            <div className="perlin-noise-control">
               <label>Sea Opacity</label>
               <Slider min={0} max={100} value={100}/>
             </div>
 
-            <div className={"perlin-noise-control " + (this.state.activeInput === "seaLevelPadding" ? "perlin-noise-control-active" : "")}>
+            <div className="perlin-noise-control">
               <label>Sea Level Padding</label>
-              <Slider min={0} max={50} value={this.state.seaLevelPadding} onChange={this.onSeaLevelPaddingChange} onBeforeChange={() => {this.sliderChangeStart('seaLevelPadding')}} onAfterChange={() => {this.sliderChangeEnd('seaLevelPadding')}}/>
+              <Slider min={0} max={50} value={this.state.seaLevelPadding} onChange={this.onSeaLevelPaddingChange} onAfterChange={this.finishChange}/>
               <p className="perlin-noise-description">Space between edge of map and island that will be underwater</p>
             </div>
 
