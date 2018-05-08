@@ -53,6 +53,16 @@ class PerlinNoiseOctave extends Component {
     });
   };
 
+  elevationPercentChanged = (newElevationPercent) => {
+
+    this.props.onChange({
+      id: this.props.octave.id,
+      xScale: this.props.octave.xScale,
+      zScale: this.props.octave.zScale,
+      elevationPercent: newElevationPercent
+    });
+  };
+
   toggleLock = () => {
 
     const newLockedState = !this.state.scaleLocked;
@@ -116,7 +126,7 @@ class PerlinNoiseOctave extends Component {
           <div className="col col-sm-12">
             <div className="perlin-noise-control">
               <label>Elevation Percent</label>
-              <Slider min={0} max={100} defaultValue={10} />
+              <Slider min={0} max={100} value={this.props.octave.elevationPercent} onChange={this.elevationPercentChanged} />
               <p className="perlin-noise-description">Sum of all octave elevation percentages must equal 100%</p>
             </div>
           </div>

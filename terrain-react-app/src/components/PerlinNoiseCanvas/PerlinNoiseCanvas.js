@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {scaleLinear} from "d3-scale";
 import * as d3Color from "d3-color";
-
+import debounce from "lodash/debounce";
 
 import './PerlinNoiseCanvas.css';
 
@@ -17,7 +17,7 @@ class PerlinNoiseCanvas extends Component {
 
   updateCanvas = () => {
 
-    console.log("updating the canvas", d3Color);
+    console.log("updating the canvas");
 
     let colorScale = scaleLinear()
       .domain([0, 0.05, 0.055, 1.0])
@@ -77,15 +77,21 @@ class PerlinNoiseCanvas extends Component {
   }
 
   componentDidUpdate = () => {
-    this.updateCanvasDims();
-
-    if (this.props.perlinNoiseGenerator) {
-      this.updateCanvas();
-    }
+    this.debounced_updateCanvas();
   }
 
   componentDidMount () {
     this.updateCanvasDims();
+  }
+
+  constructor (props) {
+    super(props);
+    this.debounced_updateCanvas = debounce(() => {
+      if (this.props.perlinNoiseGenerator) {
+        this.updateCanvasDims();
+        this.updateCanvas();
+      }
+    }, 250);
   }
 
   render() {

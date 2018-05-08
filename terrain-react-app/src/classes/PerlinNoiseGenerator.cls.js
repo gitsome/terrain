@@ -27,18 +27,22 @@ class PerlinNoiseGenerator {
 
   get = false; // this will be updated when the configs are set or are updated
 
-  seaLevel = 0;
-  seaLevelPadding = 0;
+  octaves = [];
+
+  islandConfigs = {
+    seaLevel: 0,
+    seaLevelPadding: 0
+  };
 
   getSeaLevelPadding = () => {
-    return this.seaLevelPadding;
+    return this.islandConfigs.seaLevelPadding;
   };
 
   updateGet = () => {
 
-    const SEA_LEVEL_PADDING = this.seaLevelPadding;
+    const SEA_LEVEL_PADDING = this.islandConfigs.seaLevelPadding;
     const SHORE_RADIUS = 0.5 - SEA_LEVEL_PADDING;
-    const SEA_LEVEL_PERCENT = this.seaLevel;
+    const SEA_LEVEL_PERCENT = this.islandConfigs.seaLevel;
 
     const CENTRAL_HEIGHT_PERCENT = 0.95;
 
@@ -94,8 +98,8 @@ class PerlinNoiseGenerator {
   };
 
   updateConfigs = (configs) => {
-    this.seaLevel = configs.seaLevel;
-    this.seaLevelPadding = configs.seaLevelPadding;
+    this.islandConfigs = configs.islandConfigs;
+    this.octaves = configs.octaves;
     this.updateGet();
   }
 

@@ -20,7 +20,7 @@ class PerlinNoise3DPreview extends Component {
 
   componentDidUpdate = () => {
     this.updateCanvasDims();
-    this.perlineNoise3D.update(this.props.perlinNoiseGenerator.get);
+    //this.perlineNoise3D.update(this.props.perlinNoiseGenerator.get);
   }
 
   componentDidMount () {

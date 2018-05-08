@@ -11,7 +11,7 @@ import PerlinNoiseGenerator from './classes/PerlinNoiseGenerator.cls';
 
 import PerlinNoiseCanvas from './components/PerlinNoiseCanvas/PerlinNoiseCanvas';
 import PerlinNoise3DPreview from './components/PerlinNoise3DPreview/PerlinNoise3DPreview';
-import PerlinNoiseControls from './components/PerlinNoiseControls/PerlinNoiseControls';
+import PerlinNoiseOctaveControls from './components/PerlinNoiseOctaveControls/PerlinNoiseOctaveControls';
 import IslandOptions from "./components/IslandOptions/IslandOptions";
 
 import './App.css';
@@ -30,24 +30,36 @@ const theme = createMuiTheme({
 class App extends Component {
 
   state = {
+    octaves: [{
+      id: 0,
+      xScale: 5,
+      zScale: 5,
+      elevationPercent: 10
+    }],
+    islandConfigs: {
+      enabled: false
+    },
     perlinNoiseGenerator: false,
     useTerrainPerlinNoiseColors: false
   }
 
-  constructor (props) {
-    super(props);
-
-  }
-
-  onValuesChanged = (newConfigs) => {
+  onOctavesChanged = (newOctaves) => {
     this.setState({
-      perlinNoiseGenerator: new PerlinNoiseGenerator(newConfigs)
+      octaves: newOctaves,
+      perlinNoiseGenerator: new PerlinNoiseGenerator({
+        octaves: newOctaves,
+        islandConfigs: this.state.islandConfigs
+      })
     });
   };
 
-  onIslandValuesChanged = (newIslandValues) => {
+  onIslandValuesChanged = (newIslandConfigs) => {
     this.setState({
-      perlinNoiseGenerator: new PerlinNoiseGenerator(newIslandValues)
+      islandConfigs: newIslandConfigs,
+      perlinNoiseGenerator: new PerlinNoiseGenerator({
+        octaves: this.state.octaves,
+        islandConfigs: newIslandConfigs
+      })
     });
   };
 
@@ -87,7 +99,7 @@ class App extends Component {
               <div className="row">
 
                 <div className="col col-xl-7 col-lg-12">
-                  <PerlinNoiseControls onChange={this.onValuesChanged}></PerlinNoiseControls>
+                  <PerlinNoiseOctaveControls octaves={this.state.octaves} onChange={this.onOctavesChanged}></PerlinNoiseOctaveControls>
                 </div>
 
                 <div className="col col-xl-5 col-lg-12">
@@ -106,7 +118,7 @@ class App extends Component {
                   </Paper>
 
                   <Paper className="paper-container">
-                    <IslandOptions onChange={this.onIslandValuesChanged}></IslandOptions>
+                    <IslandOptions configs={this.state.islandConfigs} onChange={this.onIslandValuesChanged}></IslandOptions>
                   </Paper>
                 </div>
 

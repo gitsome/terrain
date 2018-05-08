@@ -30,9 +30,9 @@
   margin-bottom: 15px;
   padding: 30px 30px 30px 30px; }
 
-.perlin-noise-controls-octave-controls {
+.perlin-noise-octave-controls-container {
   padding: 30px; }
-  .perlin-noise-controls-octave-controls .perlin-noise-octave-wrapper {
+  .perlin-noise-octave-controls-container .perlin-noise-octave-wrapper {
     background: rgba(0, 0, 0, 0.025);
     border: 1px solid rgba(0, 0, 0, 0.05);
     padding: 30px;
