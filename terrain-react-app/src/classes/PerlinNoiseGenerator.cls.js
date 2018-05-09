@@ -41,6 +41,7 @@ class PerlinNoiseGenerator {
   updateGet = () => {
 
     const SEA_LEVEL_PERCENT = this.islandConfigs.seaLevel || 0.1;
+    const LAND_HEIGHT_PERCENT = 1 - SEA_LEVEL_PERCENT;
 
     const SHELF_PERCENT = this.islandConfigs.shelfPercent || 0.2;
     const LAND_PERCENT = 1 - SHELF_PERCENT;
@@ -96,11 +97,11 @@ class PerlinNoiseGenerator {
         // island shelf
         if (distanceToCenterPercent > (1 - SHELF_PERCENT)) {
           shelfDistancePercent = (distanceToCenterPercent - (1 - SHELF_PERCENT)) / SHELF_PERCENT;
-          return easeCubicInOut(1 - shelfDistancePercent) * SEA_LEVEL_PERCENT + perlinScale(1 - distanceToCenterPercent) * noiseValue * LAND_PERCENT;
+          return easeCubicInOut(1 - shelfDistancePercent) * SEA_LEVEL_PERCENT + perlinScale(1 - distanceToCenterPercent) * noiseValue * LAND_HEIGHT_PERCENT;
         // island
         } else {
           landDistancePercent = (distanceToCenterPercent - SHELF_PERCENT) / (1 - SHELF_PERCENT);
-          return SEA_LEVEL_PERCENT + perlinScale(1 - distanceToCenterPercent) * noiseValue * LAND_PERCENT;
+          return SEA_LEVEL_PERCENT + perlinScale(1 - distanceToCenterPercent) * noiseValue * LAND_HEIGHT_PERCENT;
         }
       }
     };

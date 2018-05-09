@@ -32,12 +32,12 @@ class PerlinNoiseOctaveControls extends Component {
 
     return max;
   };
-  getMaxScaleY = () => {
+  getMaxScaleZ = () => {
     let max = 5;
 
     this.props.octaves.forEach((octave) => {
-      if (octave.yScale > max) {
-        max = octave.yScale;
+      if (octave.zScale > max) {
+        max = octave.zScale;
       }
     });
 
@@ -51,8 +51,8 @@ class PerlinNoiseOctaveControls extends Component {
 
     return {
       id: this.octaveId,
-      xScale: Math.min(this.getMaxScaleX() * 1.5, 100),
-      zScale: Math.min(this.getMaxScaleY() * 1.5, 100),
+      xScale: Math.min(this.getMaxScaleX() * 2.5, 100),
+      zScale: Math.min(this.getMaxScaleZ() * 2.5, 100),
       elevationPercent: 10
     }
   };

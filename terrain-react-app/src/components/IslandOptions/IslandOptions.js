@@ -49,7 +49,19 @@ class IslandOptions extends Component {
     return (
       <Fragment>
 
-        <h3>Apply Island Filter
+        <h3>Sea Options</h3>
+
+        <div className="perlin-noise-control">
+          <label>Sea Level</label>
+          <Slider min={0} max={50} value={this.props.configs.seaLevel} onChange={this.onSeaLevelChanged}/>
+        </div>
+
+        <div className="perlin-noise-control">
+          <label>Sea Opacity</label>
+          <Slider min={0} max={100} value={this.props.configs.seaOpacity} onChange={this.onSeaOpacityChanged}/>
+        </div>
+
+        <h3>Apply Island Shape
           <Switch
             color="primary"
             checked={this.props.configs.enabled}
@@ -59,16 +71,6 @@ class IslandOptions extends Component {
 
         {this.props.configs.enabled && (
           <div className="island-options-active">
-
-            <div className="perlin-noise-control">
-              <label>Sea Level</label>
-              <Slider min={0} max={50} value={this.props.configs.seaLevel} onChange={this.onSeaLevelChanged}/>
-            </div>
-
-            <div className="perlin-noise-control">
-              <label>Sea Opacity</label>
-              <Slider min={0} max={100} value={this.props.configs.seaOpacity} onChange={this.onSeaOpacityChanged}/>
-            </div>
 
             <div className="perlin-noise-control">
               <label>Sea Level Padding</label>

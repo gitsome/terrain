@@ -144,7 +144,7 @@ class App extends Component {
                         />
                       </span>
                     </h3>
-                    <PerlinNoiseCanvas perlinNoiseGenerator={this.state.perlinNoiseGenerator} useTerrainColors={this.state.useTerrainPerlinNoiseColors}></PerlinNoiseCanvas>
+                    <PerlinNoiseCanvas perlinNoiseGenerator={this.state.perlinNoiseGenerator} seaLevel={this.state.islandConfigs.seaLevel / 50} useTerrainColors={this.state.useTerrainPerlinNoiseColors}></PerlinNoiseCanvas>
                   </Paper>
 
                   <Paper className="paper-container">
