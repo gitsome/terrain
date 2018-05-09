@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import { MuiThemeProvider } from "material-ui/styles";
 import { createMuiTheme } from "material-ui/styles";
 
 import Paper from 'material-ui/Paper';
 import Switch from 'material-ui/Switch';
-import Slider, { Range } from 'rc-slider';
 
 import PerlinNoiseGenerator from './classes/PerlinNoiseGenerator.cls';
 

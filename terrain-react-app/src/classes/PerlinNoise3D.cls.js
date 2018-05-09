@@ -1,6 +1,4 @@
 import * as THREE from 'three';
-import ThreeUtils from "../services/ThreeUtils.svc";
-
 import * as OrbitControlsClass from "three-orbit-controls";
 
 
@@ -71,8 +69,7 @@ class PerlinNoise3D {
         const material = new THREE.MeshPhongMaterial({
             color: 0x007944,
             specular: 0xFFFFFF,
-            shininess: 5,
-            shading: THREE.SmoothShading
+            shininess: 5
         });
 
         this.terrainMesh = new THREE.Mesh(geometry, material);

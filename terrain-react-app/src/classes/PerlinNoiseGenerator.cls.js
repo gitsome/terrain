@@ -1,16 +1,9 @@
 import SimplexNoise from "simplex-noise";
 import {scaleLinear} from "d3-scale";
-import {easeCubicIn, easeCubicOut, easeCubicInOut, easeCircleOut, easeQuadInOut} from "d3-ease";
-
-import ThreeUtils from "../services/ThreeUtils.svc";
-import { MapsRestaurant } from "material-ui";
-import { SSL_OP_PKCS1_CHECK_1 } from "constants";
+import {easeSinInOut} from "d3-ease";
 
 
 /*============ PRIVATE STATIC VARIABLES AND METHODS ============*/
-
-const PI = Math.PI;
-const PI2 = 2 * Math.PI;
 
 const ISLAND_SHELF_MAX_PERLIN_PERCENT = 0.15;
 
@@ -44,7 +37,6 @@ class PerlinNoiseGenerator {
     const LAND_HEIGHT_PERCENT = 1 - SEA_LEVEL_PERCENT;
 
     const SHELF_PERCENT = this.islandConfigs.shelfPercent || 0.2;
-    const LAND_PERCENT = 1 - SHELF_PERCENT;
 
     const perlinScale = scaleLinear()
       .domain([0, SHELF_PERCENT, 1])
@@ -61,8 +53,6 @@ class PerlinNoiseGenerator {
       };
     });
 
-    let inverseDistancePercent;
-    let centralHeightPercent;
     let octaveIndex;
     let octave;
     let perlinNoiseValue;
@@ -80,7 +70,6 @@ class PerlinNoiseGenerator {
 
     let noiseValue;
     let shelfDistancePercent;
-    let landDistancePercent;
     let getTerrainHeight = (x, y, distanceToCenterPercent) => {
 
       if (!this.islandConfigs.enabled) {
@@ -97,10 +86,9 @@ class PerlinNoiseGenerator {
         // island shelf
         if (distanceToCenterPercent > (1 - SHELF_PERCENT)) {
           shelfDistancePercent = (distanceToCenterPercent - (1 - SHELF_PERCENT)) / SHELF_PERCENT;
-          return easeCubicInOut(1 - shelfDistancePercent) * SEA_LEVEL_PERCENT + perlinScale(1 - distanceToCenterPercent) * noiseValue * LAND_HEIGHT_PERCENT;
+          return easeSinInOut(1 - shelfDistancePercent) * SEA_LEVEL_PERCENT + perlinScale(1 - distanceToCenterPercent) * noiseValue * LAND_HEIGHT_PERCENT;
         // island
         } else {
-          landDistancePercent = (distanceToCenterPercent - SHELF_PERCENT) / (1 - SHELF_PERCENT);
           return SEA_LEVEL_PERCENT + perlinScale(1 - distanceToCenterPercent) * noiseValue * LAND_HEIGHT_PERCENT;
         }
       }

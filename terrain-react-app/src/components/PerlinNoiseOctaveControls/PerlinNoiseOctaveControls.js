@@ -3,12 +3,10 @@ import React, { Component } from 'react';
 import without from 'lodash/without';
 
 import Paper from 'material-ui/Paper';
-import Switch from 'material-ui/Switch';
 import Button from 'material-ui/Button';
 
 import AddCircle from '@material-ui/icons/AddCircle';
 
-import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 import PerlinNoiseOctave from '../PerlinNoiseOctave/PerlinNoiseOctave';

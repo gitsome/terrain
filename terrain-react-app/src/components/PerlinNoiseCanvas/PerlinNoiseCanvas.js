@@ -42,8 +42,6 @@ class PerlinNoiseCanvas extends Component {
     var heightPoints = height - 1;
 
     let x,y, color;
-    let maxValue = -Infinity;
-    let minValue = Infinity;
     for (x = 0; x < width; x++) {
         for (y = 0; y < height; y++) {
 

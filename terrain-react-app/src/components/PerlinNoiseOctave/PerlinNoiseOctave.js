@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
-import Switch from 'material-ui/Switch';
 import Button from 'material-ui/Button';
 
 import Close from '@material-ui/icons/Close';
 import LockOpen from '@material-ui/icons/LockOpen';
 import Lock from '@material-ui/icons/Lock';
 
-import Slider, { Range } from 'rc-slider';
+import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 
