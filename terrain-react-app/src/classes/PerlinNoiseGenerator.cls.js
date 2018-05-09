@@ -1,9 +1,10 @@
 import SimplexNoise from "simplex-noise";
 import {scaleLinear} from "d3-scale";
-import {easeSinIn, easeCubicInOut, easeCircleOut} from "d3-ease";
+import {easeCubicIn, easeCubicOut, easeCubicInOut, easeCircleOut, easeQuadInOut} from "d3-ease";
 
 import ThreeUtils from "../services/ThreeUtils.svc";
 import { MapsRestaurant } from "material-ui";
+import { SSL_OP_PKCS1_CHECK_1 } from "constants";
 
 
 /*============ PRIVATE STATIC VARIABLES AND METHODS ============*/
@@ -11,14 +12,12 @@ import { MapsRestaurant } from "material-ui";
 const PI = Math.PI;
 const PI2 = 2 * Math.PI;
 
+const ISLAND_SHELF_MAX_PERLIN_PERCENT = 0.15;
+
 const simplexNoise = new SimplexNoise(Math.random());
 const getPerlin = (x, y) => {
   return (simplexNoise.noise2D(x,y) + 1.0) / 2;
 };
-
-const angleDistanceScale = scaleLinear()
-  .domain([0, 0.1, 0.5])
-  .range([0, 1, 0, 1]);
 
 
 /*============ CLASS DEFINITION ============*/
@@ -30,58 +29,87 @@ class PerlinNoiseGenerator {
   octaves = [];
 
   islandConfigs = {
+    enabled: false,
     seaLevel: 0,
-    seaLevelPadding: 0
+    shelfPercent: 0
   };
 
-  getSeaLevelPadding = () => {
-    return this.islandConfigs.seaLevelPadding;
+  getShelfPercent = () => {
+    return this.islandConfigs.shelfPercent;
   };
 
   updateGet = () => {
 
-    const SEA_LEVEL_PADDING = this.islandConfigs.seaLevelPadding;
-    const SHORE_RADIUS = 0.5 - SEA_LEVEL_PADDING;
-    const SEA_LEVEL_PERCENT = this.islandConfigs.seaLevel;
+    const SEA_LEVEL_PERCENT = this.islandConfigs.seaLevel || 0.1;
 
-    const CENTRAL_HEIGHT_PERCENT = 0.95;
+    const SHELF_PERCENT = this.islandConfigs.shelfPercent || 0.2;
+    const LAND_PERCENT = 1 - SHELF_PERCENT;
 
-    const seaLevelScale = scaleLinear()
-      .domain([0, SHORE_RADIUS, 1])
-      .range([SEA_LEVEL_PERCENT, SEA_LEVEL_PERCENT, 0]);
+    const perlinScale = scaleLinear()
+      .domain([0, SHELF_PERCENT, 1])
+      .range([0, ISLAND_SHELF_MAX_PERLIN_PERCENT, 1]);
 
-    const centralHeightScale = scaleLinear()
-      .domain([0, 1])
-      .range([1, 0]);
+    let octavePerlinMethods = {};
 
-    let cachedATan = Math.atan2(0, 1);
+    this.octaves.forEach((octave) => {
 
-    let radianWeight;
+      let octavePercent = (octave.elevationPercent / 100);
 
-    let getBaseNoiseValue = (distanceToCenter) => {
-      return seaLevelScale(distanceToCenter);
-    };
+      octavePerlinMethods[octave.id] = (x, y) => {
+        return getPerlin(x * octave.xScale, y * octave.zScale) * octavePercent;
+      };
+    });
 
     let inverseDistancePercent;
     let centralHeightPercent;
-    let getMainHeightNoise = (x, y, distanceToCenterPercent) => {
+    let octaveIndex;
+    let octave;
+    let perlinNoiseValue;
+    let getNoiseValue = (x, y) => {
 
-      return getPerlin(x * 2, y * 10);
+      perlinNoiseValue = 0;
 
-      if (distanceToCenterPercent <= 1) {
-        return getPerlin(x * 5, y * 5) * centralHeightScale(distanceToCenterPercent) * CENTRAL_HEIGHT_PERCENT;
-      } else {
+      for (octaveIndex = 0; octaveIndex < this.octaves.length; octaveIndex++) {
+        octave = this.octaves[octaveIndex];
+        perlinNoiseValue = perlinNoiseValue + octavePerlinMethods[octave.id](x, y);
+      }
+
+      return perlinNoiseValue;
+    };
+
+    let noiseValue;
+    let shelfDistancePercent;
+    let landDistancePercent;
+    let getTerrainHeight = (x, y, distanceToCenterPercent) => {
+
+      if (!this.islandConfigs.enabled) {
+        return getNoiseValue(x, y);
+      }
+
+      // ocean floor
+      if (distanceToCenterPercent > 1) {
         return 0;
+      } else {
+
+        noiseValue = getNoiseValue(x, y);
+
+        // island shelf
+        if (distanceToCenterPercent > (1 - SHELF_PERCENT)) {
+          shelfDistancePercent = (distanceToCenterPercent - (1 - SHELF_PERCENT)) / SHELF_PERCENT;
+          return easeCubicInOut(1 - shelfDistancePercent) * SEA_LEVEL_PERCENT + perlinScale(1 - distanceToCenterPercent) * noiseValue * LAND_PERCENT;
+        // island
+        } else {
+          landDistancePercent = (distanceToCenterPercent - SHELF_PERCENT) / (1 - SHELF_PERCENT);
+          return SEA_LEVEL_PERCENT + perlinScale(1 - distanceToCenterPercent) * noiseValue * LAND_PERCENT;
+        }
       }
     };
 
+    // re-use these so we don't have a ton of garbage collection
     let distanceToCenter;
     let distanceToCenterPercent;
-
     let cachedXDist;
     let cachedYDist;
-
-    let noiseValue;
 
     this.get = (x, y) => {
 
@@ -90,10 +118,7 @@ class PerlinNoiseGenerator {
       distanceToCenter = Math.sqrt(cachedXDist * cachedXDist + cachedYDist * cachedYDist);
       distanceToCenterPercent = distanceToCenter / 0.5;
 
-      noiseValue = getBaseNoiseValue(distanceToCenter);
-      noiseValue = noiseValue + getMainHeightNoise(x, y, distanceToCenterPercent);
-
-      return noiseValue;
+      return getTerrainHeight(x, y, distanceToCenterPercent);
     }
   };
 

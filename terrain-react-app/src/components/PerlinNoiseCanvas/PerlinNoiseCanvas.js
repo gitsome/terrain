@@ -20,7 +20,7 @@ class PerlinNoiseCanvas extends Component {
     console.log("updating the canvas");
 
     let colorScale = scaleLinear()
-      .domain([0, 0.05, 0.055, 1.0])
+      .domain([0, this.props.perlinNoiseGenerator.getShelfPercent(), this.props.perlinNoiseGenerator.getShelfPercent() + 0.005, 1.0])
       .range(['#042c4b', '#74c0fb', '#007944', 'white']);
 
     if (!this.props.useTerrainColors) {
@@ -28,10 +28,6 @@ class PerlinNoiseCanvas extends Component {
       .domain([0, 1.0])
       .range(['#000', '#fff']);
     }
-
-    const seaLevelScale = scaleLinear()
-        .domain([0, this.props.perlinNoiseGenerator.getSeaLevelPadding(), 1])
-        .range([255, 0, 0]);
 
     const ctx = this.canvasElement.getContext('2d');
 

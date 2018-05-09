@@ -31,24 +31,54 @@ class App extends Component {
 
   state = {
     octaves: [{
-      id: 0,
-      xScale: 5,
-      zScale: 5,
-      elevationPercent: 10
+      id: -4,
+      xScale: 3,
+      zScale: 3,
+      elevationPercent: 66.5
+    },
+    {
+      id: -3,
+      xScale: 8,
+      zScale: 8,
+      elevationPercent: 30
+    },
+    {
+      id: -2,
+      xScale: 27,
+      zScale: 27,
+      elevationPercent: 3
+    },
+    {
+      id: -1,
+      xScale: 45,
+      zScale: 45,
+      elevationPercent: 1
     }],
     islandConfigs: {
-      enabled: false
+      enabled: false,
+      seaLevel: 5,
+      shelfPercent: 8,
+      seaOpacity: 40
     },
     perlinNoiseGenerator: false,
     useTerrainPerlinNoiseColors: false
   }
+
+  getTransformedIslandConfigs = (iConfigs) => {
+    return {
+      enabled: iConfigs.enabled,
+      seaLevel: iConfigs.seaLevel / 50,
+      shelfPercent: iConfigs.shelfPercent / 50,
+      seaOpacity: iConfigs.seaOpacity / 100
+    };
+  };
 
   onOctavesChanged = (newOctaves) => {
     this.setState({
       octaves: newOctaves,
       perlinNoiseGenerator: new PerlinNoiseGenerator({
         octaves: newOctaves,
-        islandConfigs: this.state.islandConfigs
+        islandConfigs: this.getTransformedIslandConfigs(this.state.islandConfigs)
       })
     });
   };
@@ -58,7 +88,7 @@ class App extends Component {
       islandConfigs: newIslandConfigs,
       perlinNoiseGenerator: new PerlinNoiseGenerator({
         octaves: this.state.octaves,
-        islandConfigs: newIslandConfigs
+        islandConfigs: this.getTransformedIslandConfigs(newIslandConfigs)
       })
     });
   };
@@ -128,7 +158,7 @@ class App extends Component {
             <div className="col col-xl-5 col-lg-6">
               <Paper className="paper-container">
                 <h3>3D Preview</h3>
-                <PerlinNoise3DPreview perlinNoiseGenerator={this.state.perlinNoiseGenerator}></PerlinNoise3DPreview>
+                <PerlinNoise3DPreview perlinNoiseGenerator={this.state.perlinNoiseGenerator} seaLevel={this.state.islandConfigs.seaLevel/50} seaOpacity={this.state.islandConfigs.seaOpacity/100}></PerlinNoise3DPreview>
               </Paper>
             </div>
 

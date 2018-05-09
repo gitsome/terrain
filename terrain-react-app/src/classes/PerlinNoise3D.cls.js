@@ -17,13 +17,21 @@ const MAX_WIDTH = 32768;
 class PerlinNoise3D {
 
     canvas = false;
+
     getHeight = false;
+    seaLevel = 0.1;
+    seaOpacity = 1;
+
     points = 500;
+    pointsMinusOne = this.points - 1;
 
     scene = false;
     camera = false;
     renderer = false;
     controls = false;
+
+    terrainMesh = false;
+    oceanMesh = false;
 
     initializeRenderer = () => {
 
@@ -57,42 +65,22 @@ class PerlinNoise3D {
         var directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
         directionalLight.position.set(1, 2, -2);
         this.scene.add(directionalLight);
-    };
 
-    getPertebation = () => {
-        return (Math.random() - 0.5) * 5;
-    };
-
-    updateHeightMapMesh = () => {
-
-        const pointsMinusOne = this.points - 1;
-
-        const geometry = new THREE.PlaneBufferGeometry(MAX_WIDTH, MAX_WIDTH, pointsMinusOne, pointsMinusOne);
+        // the actual terrain mesh
+        const geometry = new THREE.PlaneBufferGeometry(MAX_WIDTH, MAX_WIDTH, this.points - 1, this.points - 1);
         const material = new THREE.MeshPhongMaterial({
             color: 0x007944,
             specular: 0xFFFFFF,
             shininess: 5,
-            shading: THREE.FlatShading
+            shading: THREE.SmoothShading
         });
 
-        let plane = new THREE.Mesh(geometry, material);
-        plane.rotation.x = -Math.PI / 2;
+        this.terrainMesh = new THREE.Mesh(geometry, material);
+        this.terrainMesh.rotation.x = -Math.PI / 2;
 
-        let vertices = plane.geometry.attributes.position.array;
+        this.scene.add(this.terrainMesh);
 
-        // //set height of vertices
-        for (var i = 0; i < this.points; i++) {
-            for (var j = 0; j < this.points; j++) {
-                 vertices[(j + this.points * i) * 3 + 0] = vertices[(j + this.points * i) * 3 + 0];
-                 vertices[(j + this.points * i) * 3 + 1] = vertices[(j + this.points * i) * 3 + 1];
-                 vertices[(j + this.points * i) * 3 + 2] = this.getHeight(j/(pointsMinusOne), (i/pointsMinusOne)) * MAX_HEIGHT + this.getPertebation();
-            }
-        }
-
-        plane.geometry.computeVertexNormals();
-
-        this.scene.add(plane);
-
+        // ocean floor
         var oceanFloorGeometry = new THREE.PlaneGeometry(MAX_WIDTH * 2, MAX_WIDTH * 2, 10, 10);
         var oceanFloorMaterial = new THREE.MeshPhongMaterial({
             color: 0x007944,
@@ -104,6 +92,7 @@ class PerlinNoise3D {
         oceanFloorPlane.rotation.x = -Math.PI / 2;
         this.scene.add(oceanFloorPlane);
 
+        // water
         var waterGeometry = new THREE.PlaneGeometry(MAX_WIDTH * 2, MAX_WIDTH * 2, 10, 10);
         var waterMaterial = new THREE.MeshPhongMaterial({
             color: 0x74c0fb,
@@ -113,11 +102,35 @@ class PerlinNoise3D {
             transparent: true
         });
 
-        let waterPlane = new THREE.Mesh(waterGeometry, waterMaterial);
-        waterPlane.rotation.x = -Math.PI / 2;
-        waterPlane.position.y = MAX_HEIGHT * 0.05;
+        this.oceanMesh = new THREE.Mesh(waterGeometry, waterMaterial);
+        this.oceanMesh.rotation.x = -Math.PI / 2;
 
-        this.scene.add(waterPlane);
+        this.scene.add(this.oceanMesh);
+    };
+
+    updateScene = (needsVerticesUpdate) => {
+
+        if (needsVerticesUpdate) {
+
+            let vertices = this.terrainMesh.geometry.attributes.position.array;
+
+            // //set height of vertices
+            for (var i = 0; i < this.points; i++) {
+                for (var j = 0; j < this.points; j++) {
+                    vertices[(j + this.points * i) * 3 + 0] = vertices[(j + this.points * i) * 3 + 0];
+                    vertices[(j + this.points * i) * 3 + 1] = vertices[(j + this.points * i) * 3 + 1];
+                    vertices[(j + this.points * i) * 3 + 2] = this.getHeight(j/(this.points - 1), (i/(this.points - 1))) * MAX_HEIGHT;
+                }
+            }
+
+            this.terrainMesh.geometry.computeVertexNormals();
+            this.terrainMesh.geometry.attributes.position.needsUpdate = true;
+        }
+
+        this.oceanMesh.position.y = MAX_HEIGHT * this.seaLevel;
+        this.oceanMesh.__dirtyPosition = true;
+
+        this.oceanMesh.material.opacity = this.seaOpacity;
     };
 
     startLoop = () => {
@@ -128,15 +141,23 @@ class PerlinNoise3D {
     constructor (options) {
 
         this.canvas = options.canvas;
-        this.points = options.points || 500;
+        this.points = options.points || 400;
+        this.seaLevel = options.seaLevel || 0.1;
+        this.seaOpacity = options.seaOpacity || 1.0;
 
         this.initializeRenderer();
         this.startLoop();
     }
 
-    update = (newPerlinGetFunction) => {
+    update = (newPerlinGetFunction, seaOpacity, seaLevel) => {
+
+        this.seaOpacity = seaOpacity;
+        this.seaLevel = seaLevel;
+
+        const needsVerticesUpdate = (newPerlinGetFunction !== this.getHeight);
+
         this.getHeight = newPerlinGetFunction;
-        this.updateHeightMapMesh();
+        this.updateScene(needsVerticesUpdate);
     };
 
 }

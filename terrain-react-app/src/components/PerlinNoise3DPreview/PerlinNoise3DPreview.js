@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PerlinNoise3D from '../../classes/PerlinNoise3D.cls';
 
+import debounce from "lodash/debounce";
+
 import './PerlinNoise3DPreview.css';
 class PerlinNoise3DPreview extends Component {
 
@@ -14,13 +16,8 @@ class PerlinNoise3DPreview extends Component {
     this.canvasElement.height = this.canvasElementContainer.offsetWidth;
   }
 
-  shouldComponentUpdate (newProps, newState) {
-    return newProps.perlinNoiseGenerator !== this.props.perlinNoiseGenerator;
-  }
-
   componentDidUpdate = () => {
-    this.updateCanvasDims();
-    //this.perlineNoise3D.update(this.props.perlinNoiseGenerator.get);
+    this.debounced_update();
   }
 
   componentDidMount () {
@@ -29,8 +26,19 @@ class PerlinNoise3DPreview extends Component {
 
     this.perlineNoise3D = new PerlinNoise3D({
       canvas: this.canvasElement,
-      points: 400
+      points: 400,
+      seaLevel: this.props.seaLevel,
+      seaOpacity: this.props.seaOpacity
     });
+  }
+
+  constructor (props) {
+    super(props);
+
+    this.debounced_update = debounce(() => {
+      this.updateCanvasDims();
+      this.perlineNoise3D.update(this.props.perlinNoiseGenerator.get, this.props.seaOpacity, this.props.seaLevel);
+    }, 500);
   }
 
   render() {

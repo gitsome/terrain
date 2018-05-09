@@ -9,37 +9,39 @@ import 'rc-slider/assets/index.css';
 import './IslandOptions.css';
 class IslandOptions extends Component {
 
-  state = {
-    seaLevel: 0,
-    seaLevelOpacity: 1.0,
-    seaLevelPadding: 5,
-    useIslandOptions: true
-  };
-
-  onSeaLevelPaddingChange = (newValue) => {
-    this.setState({seaLevelPadding: newValue});
-  }
-
-  sliderChangeEnd (inputKey) {
-    this.notifyStateChange();
-  }
-
-  notifyStateChange = () => {
+  onShelfPercentChange = (newShelfPercent) => {
     this.props.onChange({
-      seaLevelPadding: (this.state.seaLevelPadding / 100) * 0.5,
-      seaLevel: (this.state.seaLevel / 100),
-      seaLevelOpacity: (this.state.seaLevelOpacity / 100),
-      useIslandOptions: this.state.useIslandOptions
+      enabled: this.props.configs.enabled,
+      seaLevel: this.props.configs.seaLevel,
+      shelfPercent: newShelfPercent,
+      seaOpacity: this.props.configs.seaOpacity
     });
-  }
-
-  finishChange = () => {
-    this.notifyStateChange();
   };
 
-  toggleUseIslandOptions (useIslandOptions) {
-    this.setState({
-      useIslandOptions: useIslandOptions
+  onSeaLevelChanged = (newSeaLevel) => {
+    this.props.onChange({
+      enabled: this.props.configs.enabled,
+      seaLevel: newSeaLevel,
+      shelfPercent: this.props.configs.shelfPercent,
+      seaOpacity: this.props.configs.seaOpacity
+    });
+  };
+
+  onSeaOpacityChanged = (newSeaOpacity) => {
+    this.props.onChange({
+      enabled: this.props.configs.enabled,
+      seaLevel: this.props.configs.seaLevel,
+      shelfPercent: this.props.configs.shelfPercent,
+      seaOpacity: newSeaOpacity
+    });
+  };
+
+  toggleUseIslandOptions () {
+    this.props.onChange({
+      enabled: !this.props.configs.enabled,
+      seaLevel: this.props.configs.seaLevel,
+      shelfPercent: this.props.configs.shelfPercent,
+      seaOpacity: this.props.configs.seaOpacity
     });
   }
 
@@ -50,27 +52,27 @@ class IslandOptions extends Component {
         <h3>Apply Island Filter
           <Switch
             color="primary"
-            checked={this.state.useIslandOptions}
+            checked={this.props.configs.enabled}
             onChange={(e) => { this.toggleUseIslandOptions(e.target.checked);}}
           />
         </h3>
 
-        {this.state.useIslandOptions && (
+        {this.props.configs.enabled && (
           <div className="island-options-active">
 
             <div className="perlin-noise-control">
               <label>Sea Level</label>
-              <Slider min={0} max={100} defaultValue={5} />
+              <Slider min={0} max={50} value={this.props.configs.seaLevel} onChange={this.onSeaLevelChanged}/>
             </div>
 
             <div className="perlin-noise-control">
               <label>Sea Opacity</label>
-              <Slider min={0} max={100} value={100}/>
+              <Slider min={0} max={100} value={this.props.configs.seaOpacity} onChange={this.onSeaOpacityChanged}/>
             </div>
 
             <div className="perlin-noise-control">
               <label>Sea Level Padding</label>
-              <Slider min={0} max={50} value={this.state.seaLevelPadding} onChange={this.onSeaLevelPaddingChange} onAfterChange={this.finishChange}/>
+              <Slider min={0} max={50} value={this.props.configs.shelfPercent} onChange={this.onShelfPercentChange}/>
               <p className="perlin-noise-description">Space between edge of map and island that will be underwater</p>
             </div>
 
