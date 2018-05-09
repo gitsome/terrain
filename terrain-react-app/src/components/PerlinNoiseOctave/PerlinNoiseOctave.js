@@ -96,7 +96,7 @@ class PerlinNoiseOctave extends Component {
           <div className="col-4">
             <div className="perlin-noise-control">
               <label>X-scale</label>
-              <Slider min={0} max={100} value={this.props.octave.xScale} onChange={this.xScaleChanged} />
+              <Slider min={1} max={100} value={this.props.octave.xScale} onChange={this.xScaleChanged} />
             </div>
           </div>
 
@@ -114,7 +114,7 @@ class PerlinNoiseOctave extends Component {
           <div className="col-4">
             <div className="perlin-noise-control">
               <label>Z-scale</label>
-              <Slider min={0} max={100} value={this.props.octave.zScale} onChange={this.zScaleChanged} />
+              <Slider min={1} max={100} value={this.props.octave.zScale} onChange={this.zScaleChanged} />
             </div>
           </div>
 
