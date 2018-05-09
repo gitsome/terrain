@@ -4,6 +4,10 @@ A responsive progressive Perlin noise playground for 3D terrain generation.
 
 This application can be pulled down and run locally. You can also pull it down, tweak it, build it, and host the build contents on a static server.
 
+View the [LIVE DEMO HERE](https://johndavidfive.com/sites/terrain/index.html).
+
+Read the article that goes along with this demo [HERE](https://medium.com/p/76f93da23601).
+
 ![screenshot of app](app.png)
 
 ## Dependencies
