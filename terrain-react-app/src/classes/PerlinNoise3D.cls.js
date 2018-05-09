@@ -107,6 +107,16 @@ class PerlinNoise3D {
         this.scene.add(this.oceanMesh);
     };
 
+    updateDimensions = () => {
+
+        let canvasWidth = this.canvas.width;
+
+        this.camera.aspect = canvasWidth / canvasWidth;
+        this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize( canvasWidth, canvasWidth );
+    };
+
     updateScene = () => {
 
         let vertices = this.terrainMesh.geometry.attributes.position.array;
@@ -151,6 +161,7 @@ class PerlinNoise3D {
         this.seaOpacity = seaOpacity;
         this.getHeight = newPerlinGetFunction;
 
+        this.updateDimensions();
         this.updateScene();
     };
 

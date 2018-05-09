@@ -30,6 +30,12 @@ class PerlinNoise3DPreview extends Component {
       seaLevel: this.props.seaLevel,
       seaOpacity: this.props.seaOpacity
     });
+
+    window.addEventListener("resize", this.debounced_update);
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener("resize", this.debounced_update);
   }
 
   constructor (props) {

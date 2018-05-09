@@ -62,7 +62,7 @@ class PerlinNoiseCanvas extends Component {
     ctx.fillColor = 'black';
     ctx.fillRect(0, 0, 100, 100);
     ctx.putImageData(image, 0, 0);
-  }
+  };
 
   shouldComponentUpdate (newProps, newState) {
     return (newProps.perlinNoiseGenerator !== this.props.perlinNoiseGenerator) || (newProps.useTerrainColors !== this.props.useTerrainColors);
@@ -74,10 +74,16 @@ class PerlinNoiseCanvas extends Component {
 
   componentDidMount () {
     this.updateCanvasDims();
+    window.addEventListener("resize", this.debounced_updateCanvas);
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener("resize", this.debounced_updateCanvas);
   }
 
   constructor (props) {
     super(props);
+
     this.debounced_updateCanvas = debounce(() => {
       if (this.props.perlinNoiseGenerator) {
         this.updateCanvasDims();

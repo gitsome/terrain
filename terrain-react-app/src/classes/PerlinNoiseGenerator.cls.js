@@ -7,17 +7,16 @@ import {easeSinInOut} from "d3-ease";
 
 const ISLAND_SHELF_MAX_PERLIN_PERCENT = 0.15;
 
-const simplexNoise = new SimplexNoise(Math.random());
-const getPerlin = (x, y) => {
-  return (simplexNoise.noise2D(x,y) + 1.0) / 2;
-};
-
 
 /*============ CLASS DEFINITION ============*/
 
 class PerlinNoiseGenerator {
 
   get = false; // this will be updated when the configs are set or are updated
+
+  seed = false;
+
+  getPerlin = false;
 
   octaves = [];
 
@@ -38,9 +37,14 @@ class PerlinNoiseGenerator {
 
     const SHELF_PERCENT = this.islandConfigs.shelfPercent || 0.2;
 
-    const perlinScale = scaleLinear()
+    const perlinLinearScale = scaleLinear()
       .domain([0, SHELF_PERCENT, 1])
       .range([0, ISLAND_SHELF_MAX_PERLIN_PERCENT, 1]);
+
+    const perlinScale = (percent) => {
+      return perlinLinearScale(easeSinInOut(percent));
+    };
+
 
     let octavePerlinMethods = {};
 
@@ -49,7 +53,7 @@ class PerlinNoiseGenerator {
       let octavePercent = (octave.elevationPercent / 100);
 
       octavePerlinMethods[octave.id] = (x, y) => {
-        return getPerlin(x * octave.xScale, y * octave.zScale) * octavePercent;
+        return this.getPerlin(x * octave.xScale, y * octave.zScale) * octavePercent;
       };
     });
 
@@ -112,8 +116,17 @@ class PerlinNoiseGenerator {
   };
 
   updateConfigs = (configs) => {
+
     this.islandConfigs = configs.islandConfigs;
     this.octaves = configs.octaves;
+
+    this.seed = configs.seed || Math.random();
+
+    const simplexNoise = new SimplexNoise(this.seed);
+    this.getPerlin = (x, y) => {
+      return (simplexNoise.noise2D(x,y) + 1.0) / 2; // normalize to between 0 and 1
+    };
+
     this.updateGet();
   }
 

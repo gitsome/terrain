@@ -153,7 +153,7 @@ class PerlinNoiseOctaveControls extends Component {
     return (
         <div className="perlin-noise-octave-controls">
 
-          <Paper className="perlin-noise-octave-controls-container">
+          <Paper className="perlin-noise-octave-controls-container paper-container">
 
             <h3>Perlin Noise Octaves</h3>
 

@@ -859,13 +859,16 @@ h3 {
 h4 {
   font-size: 1.1em; }
 
-header {
+.header-container {
   padding: 30px;
-  margin-bottom: 30px;
   background: #042c4b;
+  margin-bottom: 30px;
+  box-shadow: 5px 0px 15px 0px rgba(0, 0, 0, 0.75);
+  position: relative; }
+
+header {
   text-transform: uppercase;
-  text-align: center;
-  box-shadow: 5px 0px 15px 0px rgba(0, 0, 0, 0.75); }
+  text-align: center; }
   header h1 {
     color: #fff;
     font-size: 30px;
@@ -881,6 +884,17 @@ header {
     letter-spacing: 6px;
     margin-top: 20px;
     margin-bottom: 10px; }
+
+.share-link-text {
+  font-size: 18px;
+  display: inline-block;
+  line-height: 30px;
+  vertical-align: middle;
+  padding-left: 15px; }
+
+.share-link {
+  line-height: 30px;
+  vertical-align: middle; }
 
 button {
   outline: none; }
@@ -917,3 +931,21 @@ button {
     margin-right: 5px;
     font-size: 18px;
     color: rgba(0, 0, 0, 0.6); }
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  header h1 {
+    font-size: 24px;
+    letter-spacing: 6px; }
+  header h2 {
+    font-size: 18px;
+    letter-spacing: 3px; } }
+
+@media (max-width: 767.98px) {
+  header h1 {
+    font-size: 20px;
+    letter-spacing: 3px;
+    text-align: center; }
+  header h2 {
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-align: center; } }

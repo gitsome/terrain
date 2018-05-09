@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 import Switch from 'material-ui/Switch';
+import Paper from 'material-ui/Paper';
 
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -49,37 +50,41 @@ class IslandOptions extends Component {
     return (
       <Fragment>
 
-        <h3>Sea Options</h3>
+        <Paper className="paper-container">
+          <h3>Apply Island Shape
+            <Switch
+              color="primary"
+              checked={this.props.configs.enabled}
+              onChange={(e) => { this.toggleUseIslandOptions(e.target.checked);}}
+            />
+          </h3>
 
-        <div className="perlin-noise-control">
-          <label>Sea Level</label>
-          <Slider min={0} max={50} value={this.props.configs.seaLevel} onChange={this.onSeaLevelChanged}/>
-        </div>
+          {this.props.configs.enabled && (
+            <div className="island-options-active">
 
-        <div className="perlin-noise-control">
-          <label>Sea Opacity</label>
-          <Slider min={0} max={100} value={this.props.configs.seaOpacity} onChange={this.onSeaOpacityChanged}/>
-        </div>
+              <div className="perlin-noise-control">
+                <label>Sea Level Padding</label>
+                <Slider min={0} max={25} value={this.props.configs.shelfPercent} onChange={this.onShelfPercentChange}/>
+                <p className="perlin-noise-description">Space between edge of map and island that will be underwater</p>
+              </div>
 
-        <h3>Apply Island Shape
-          <Switch
-            color="primary"
-            checked={this.props.configs.enabled}
-            onChange={(e) => { this.toggleUseIslandOptions(e.target.checked);}}
-          />
-        </h3>
-
-        {this.props.configs.enabled && (
-          <div className="island-options-active">
-
-            <div className="perlin-noise-control">
-              <label>Sea Level Padding</label>
-              <Slider min={0} max={50} value={this.props.configs.shelfPercent} onChange={this.onShelfPercentChange}/>
-              <p className="perlin-noise-description">Space between edge of map and island that will be underwater</p>
             </div>
+          )}
+        </Paper>
 
+        <Paper className="paper-container">
+          <h3>Sea Options</h3>
+
+          <div className="perlin-noise-control">
+            <label>Sea Level</label>
+            <Slider min={0} max={50} value={this.props.configs.seaLevel} onChange={this.onSeaLevelChanged}/>
           </div>
-        )}
+
+          <div className="perlin-noise-control">
+            <label>Sea Opacity</label>
+            <Slider min={0} max={100} value={this.props.configs.seaOpacity} onChange={this.onSeaOpacityChanged}/>
+          </div>
+        </Paper>
 
       </Fragment>
     );
