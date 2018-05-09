@@ -7,6 +7,12 @@
         &.perlin-noise-octave-lock-disabled {
             opacity: 0.50;
         }
+
+        &.perlin-noise-octave-lock-mobile {
+            display: inline-block;
+            margin-top: 25px;
+            cursor: pointer;
+        }
     }
 
     .perlin-noise-octave-delete {

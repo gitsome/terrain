@@ -93,14 +93,14 @@ class PerlinNoiseOctave extends Component {
 
         <div className="row">
 
-          <div className="col-4">
+          <div className="col-5 col-sm-4">
             <div className="perlin-noise-control">
               <label>X-scale</label>
               <Slider min={1} max={100} value={this.props.octave.xScale} onChange={this.xScaleChanged} />
             </div>
           </div>
 
-          <div className="col-4 text-center">
+          <div className="d-none d-sm-block col-sm-4 text-center">
             <Button variant={this.state.scaleLocked ? 'raised' : 'flat'} size="small" aria-label="lock and unlock x and z scale" onClick={this.toggleLock} className={'perlin-noise-octave-lock ' + (this.state.scaleLocked ? '' : 'perlin-noise-octave-lock-disabled')}>
               {this.state.scaleLocked && (
                 <Lock />
@@ -111,7 +111,18 @@ class PerlinNoiseOctave extends Component {
             </Button>
           </div>
 
-          <div className="col-4">
+          <div className="d-block d-sm-none col-2 text-center">
+            <span aria-label="lock and unlock x and z scale" onClick={this.toggleLock} className={'perlin-noise-octave-lock-mobile perlin-noise-octave-lock ' + (this.state.scaleLocked ? '' : 'perlin-noise-octave-lock-disabled')}>
+              {this.state.scaleLocked && (
+                <Lock />
+              )}
+              {!this.state.scaleLocked && (
+                <LockOpen />
+              )}
+            </span>
+          </div>
+
+          <div className="col-5 col-sm-4">
             <div className="perlin-noise-control">
               <label>Z-scale</label>
               <Slider min={1} max={100} value={this.props.octave.zScale} onChange={this.zScaleChanged} />

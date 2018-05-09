@@ -4,6 +4,10 @@
     top: 17px; }
     .perlin-noise-octave .perlin-noise-octave-lock.perlin-noise-octave-lock-disabled {
       opacity: 0.50; }
+    .perlin-noise-octave .perlin-noise-octave-lock.perlin-noise-octave-lock-mobile {
+      display: inline-block;
+      margin-top: 25px;
+      cursor: pointer; }
   .perlin-noise-octave .perlin-noise-octave-delete {
     position: absolute;
     top: -44px;
