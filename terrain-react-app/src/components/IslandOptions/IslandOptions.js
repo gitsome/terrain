@@ -51,7 +51,7 @@ class IslandOptions extends Component {
       <Fragment>
 
         <Paper className="paper-container">
-          <h3>Apply Island Shape
+          <h3 className="mb-0">Apply Island Shape
             <Switch
               color="primary"
               checked={this.props.configs.enabled}
@@ -60,9 +60,9 @@ class IslandOptions extends Component {
           </h3>
 
           {this.props.configs.enabled && (
-            <div className="island-options-active">
+            <div className="island-options-active mt-3">
 
-              <div className="perlin-noise-control">
+              <div className="perlin-noise-control mb-0">
                 <label>Sea Level Padding</label>
                 <Slider min={0} max={25} value={this.props.configs.shelfPercent} onChange={this.onShelfPercentChange}/>
                 <p className="perlin-noise-description">Space between edge of map and island that will be underwater</p>
@@ -73,14 +73,14 @@ class IslandOptions extends Component {
         </Paper>
 
         <Paper className="paper-container">
-          <h3>Sea Options</h3>
+          <h3 className="mb-0">Sea Options</h3>
 
-          <div className="perlin-noise-control">
+          <div className="perlin-noise-control mt-3">
             <label>Sea Level</label>
             <Slider min={0} max={50} value={this.props.configs.seaLevel} onChange={this.onSeaLevelChanged}/>
           </div>
 
-          <div className="perlin-noise-control">
+          <div className="perlin-noise-control mb-0">
             <label>Sea Opacity</label>
             <Slider min={0} max={100} value={this.props.configs.seaOpacity} onChange={this.onSeaOpacityChanged}/>
           </div>

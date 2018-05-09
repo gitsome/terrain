@@ -22,7 +22,8 @@
   margin-bottom: 20px; }
   .perlin-noise-control .perlin-noise-description {
     color: #777;
-    font-size: 14px; }
+    font-size: 14px;
+    margin-bottom: 0px; }
   .perlin-noise-control h4 {
     transition: color 500ms ease-out; }
 

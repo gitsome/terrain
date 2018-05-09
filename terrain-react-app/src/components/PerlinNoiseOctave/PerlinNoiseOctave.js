@@ -134,7 +134,7 @@ class PerlinNoiseOctave extends Component {
         <div className="row">
 
           <div className="col col-sm-12">
-            <div className="perlin-noise-control">
+            <div className="perlin-noise-control mb-0">
               <label>Elevation Percent</label>
               <Slider min={0} max={100} value={this.props.octave.elevationPercent} onChange={this.elevationPercentChanged} />
               <p className="perlin-noise-description">Sum of all octave elevation percentages must equal 100%</p>
