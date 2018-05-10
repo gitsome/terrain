@@ -1959,7 +1959,12 @@ template {
     margin-left: auto !important; } }
 
 .rc-slider {
-  height: 22px; }
+  height: 22px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none; }
 
 .rc-slider-handle {
   border: solid 3px #40a6f5;

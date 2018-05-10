@@ -179,7 +179,7 @@ class App extends Component {
                       <span className="share-link-text">URL copied to clipboard!</span>
                     )}
                     {!this.state.currentURLCopied && (
-                      <span className="share-link-text">Click to save your work.</span>
+                      <span className="share-link-text">Press to save your work.</span>
                     )}
                   </Paper>
 
