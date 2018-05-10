@@ -12,13 +12,19 @@ Read the article that goes along with this demo [HERE](https://medium.com/p/76f9
 
 ## Dependencies
 
-You will need NodeJS which ships with NPM. Once you have NodeJS and NPM run the following command within the `terrain-react-app` directory:
+You will need NodeJS installed which ships with NPM.
+
+## Startup
+
+Once you have NodeJS and NPM run the following command within the `terrain-react-app` directory:
 ```bash
 cd terrain-react-app
 npm run start
 ```
 
 That will install dependencies, start watches on files, and server the application locally ( typically localhost:3000 ).
+
+## Build for Deployment
 
 To run a build which will generate the production `build` directory that can then be dropped into a static server, you will need to do two things:
 
@@ -30,6 +36,6 @@ cd terrain-react-app
 npm run build
 ```
 
-## Create React App
+## Create React App Info
 
 This app was bootstrapped using create-react-app. See the README.md file within terrain-react-app for more details.
