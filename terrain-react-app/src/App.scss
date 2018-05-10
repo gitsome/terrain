@@ -1,11 +1,5 @@
 @import 'scss/_required.scss';
 
-// Additional Bootstrap Includes
-@import 'node_modules/bootstrap/scss/reboot';
-@import 'node_modules/bootstrap/scss/grid';
-@import 'node_modules/bootstrap/scss/utilities/display';
-@import 'node_modules/bootstrap/scss/utilities/spacing';
-
 // Main styling
 body {
     font-family: 'Open Sans', sans-serif;

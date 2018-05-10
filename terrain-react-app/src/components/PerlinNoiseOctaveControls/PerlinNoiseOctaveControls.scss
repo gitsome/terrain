@@ -54,3 +54,15 @@
         margin-bottom: 30px;
     }
 }
+
+@include media-breakpoint-between(xs, sm) {
+
+    .perlin-noise-octave-controls-container {
+
+        .perlin-noise-octave-wrapper {
+            padding: 15px;
+        }
+    }
+}
+
+
