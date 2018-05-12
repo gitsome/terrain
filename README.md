@@ -22,7 +22,7 @@ cd terrain-react-app
 npm run start
 ```
 
-That will install dependencies, start watches on files, and server the application locally ( typically localhost:3000 ).
+That will install dependencies, start watches on files, and serve the application locally ( typically localhost:3000 ).
 
 ## Build for Deployment
 
