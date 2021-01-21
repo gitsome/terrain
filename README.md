@@ -19,6 +19,7 @@ You will need NodeJS installed which ships with NPM.
 Once you have NodeJS and NPM run the following command within the `terrain-react-app` directory:
 ```bash
 cd terrain-react-app
+npm install
 npm run start
 ```
 
@@ -33,6 +34,7 @@ To run a build which will generate the production `build` directory that can the
 
 ```bash
 cd terrain-react-app
+npm install
 npm run build
 ```
 
